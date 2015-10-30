@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace RESTShared
 {
-    [Route("/spellcheckrequest") ]
-    [Route("/spellcheckrequest/{Word}") ]
-    public class SpellCheckRequest
+    public class SpellCheckRequest : IReturn<SpellCheckSuggestion>
     {
-        public string Word;
+        public string Word { get; set; }
     }
 }

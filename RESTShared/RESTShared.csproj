@@ -54,9 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Request.cs" />
+    <Compile Include="SpellCheckRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Response.cs" />
+    <Compile Include="SpellCheckSuggestion.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
