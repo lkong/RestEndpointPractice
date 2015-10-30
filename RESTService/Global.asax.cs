@@ -48,7 +48,7 @@ namespace RESTService
 
         }
     }
-    public class DictionaryService : Service
+    public class DictionaryWebService : Service
     {
         public SpellCheckSuggestion Any(SpellCheckRequest request)
         {
@@ -60,7 +60,11 @@ namespace RESTService
             /// <summary>
             /// Initializes a new instance of your ServiceStack application, with the specified name and assembly containing the services.
             /// </summary>
-            public SpellCheckAppHost() : base("Spellcheck Web Services", typeof(DictionaryService).Assembly) { }
+            public SpellCheckAppHost() : base("Spellcheck Web Services", typeof(DictionaryWebService).Assembly) 
+            {
+                DictionaryDBService ddbService = new DictionaryDBService();
+                ddbService.Init();
+            }
  
             /// <summary>
             /// Configure the container with the necessary routes for your ServiceStack application.
