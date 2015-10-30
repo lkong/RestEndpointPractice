@@ -78,17 +78,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL\Prefix.cs" />
+    <Compile Include="BL\CommonMisspell.cs" />
     <Compile Include="BL\SpellCheckRequest.cs" />
     <Compile Include="DAL\DAOBase.cs" />
-    <Compile Include="DAL\PrefixDAO.cs" />
-    <Compile Include="DAL\SuffixDAO.cs" />
+    <Compile Include="DAL\CommonMisspellDAO.cs" />
     <Compile Include="DAL\WordDAO.cs" />
     <Compile Include="DbFactoryService.cs" />
     <Compile Include="DictionaryDBService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BL\SpellCheckSuggestion.cs" />
-    <Compile Include="BL\Suffix.cs" />
     <Compile Include="BL\Word.cs" />
   </ItemGroup>
   <ItemGroup>
