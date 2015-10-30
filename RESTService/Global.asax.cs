@@ -50,9 +50,14 @@ namespace RESTService
     }
     public class DictionaryWebService : Service
     {
-        public SpellCheckSuggestion Any(SpellCheckRequest request)
+        private DictionaryDBService dictionaryDBService = new DictionaryDBService();
+        public DictionaryWebService()
         {
-            return new SpellCheckSuggestion() { Word=request.Word };
+            dictionaryDBService.Init(); 
+        }
+        public List<SpellCheckSuggestion> Any(SpellCheckRequest request)
+        {
+            return dictionaryDBService.GetSpellSuggestions(new Word() {Spell=request.Word });
         }
     }
     public class SpellCheckAppHost : AppHostBase
@@ -62,8 +67,6 @@ namespace RESTService
             /// </summary>
             public SpellCheckAppHost() : base("Spellcheck Web Services", typeof(DictionaryWebService).Assembly) 
             {
-                DictionaryDBService ddbService = new DictionaryDBService();
-                ddbService.Init();
             }
  
             /// <summary>

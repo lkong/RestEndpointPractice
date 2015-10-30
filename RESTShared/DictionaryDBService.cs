@@ -66,7 +66,7 @@ namespace RESTShared
             new CommonMisspellDAO().Insert(new CommonMisspell() { FullWordId = apple.Id, Spell="epple" });
             new CommonMisspellDAO().Insert(new CommonMisspell() { FullWordId = apple.Id, Spell="appl" });
             new CommonMisspellDAO().Insert(new CommonMisspell() { FullWordId = apple.Id, Spell="appla" });
-            List<SpellCheckSuggestion> suggestionsList = GetSpellSuggestions(new Word() { Spell = "Zpple" });
+            //List<SpellCheckSuggestion> suggestionsList = GetSpellSuggestions(new Word() { Spell = "Zpple" });
 
         }
     }
