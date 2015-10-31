@@ -34,10 +34,16 @@ namespace RESTShared
                 return true;
 
         }
+        public string GetCorrectSpellForACommonMisspell(string misspell)
+        {
+            return new CommonMisspellDAO().QueryCorrectSpell(misspell);
+        }
         public List<SpellCheckSuggestion> GetSpellSuggestions(Word word)
         {
             List<SpellCheckSuggestion> suggestionList = new List<SpellCheckSuggestion>();
             Dictionary<string, int> suggestionDict = new Dictionary<string, int>();
+            if (IsACommonMisspell(word))
+                suggestionDict.Add(GetCorrectSpellForACommonMisspell(word.Spell), 0);
             GetSpellSuggestions(word.Spell, 0,suggestionDict);
             foreach (string k in suggestionDict.Keys)
             {
@@ -62,9 +68,10 @@ namespace RESTShared
             new WordDAO().CreateTable();
             new CommonMisspellDAO().CreateTable();
             Word apple = new Word() { Spell = "Apple" };
-            new WordDAO().Insert(apple);
-            new CommonMisspellDAO().Insert(new CommonMisspell() { FullWordId = apple.Id, Spell="epple" });
-            new CommonMisspellDAO().Insert(new CommonMisspell() { FullWordId = apple.Id, Spell="appl" });
+            Word people = new Word() { Spell = "People" };
+
+            apple=new WordDAO().Insert(apple);
+            people=new WordDAO().Insert(people);
             new CommonMisspellDAO().Insert(new CommonMisspell() { FullWordId = apple.Id, Spell="appla" });
             //List<SpellCheckSuggestion> suggestionsList = GetSpellSuggestions(new Word() { Spell = "Zpple" });
 

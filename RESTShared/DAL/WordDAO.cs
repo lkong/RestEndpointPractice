@@ -16,7 +16,7 @@ namespace RESTShared.DAL
         }
         public Word Insert(Word word)
         {
-            GetConnection(ConnectionString).Insert(word);
+            GetConnection(ConnectionString).Save(word);
             return word;
         }
         public Word Query(Word word)

@@ -20,8 +20,11 @@
     
     </div>
         <p>
-            <asp:TextBox ID="TextBox1" runat="server" Height="600px" Width="600px" TextMode="MultiLine"></asp:TextBox>
+            <asp:TextBox ID="InputTextBox" runat="server" Height="30px" Width="600px"></asp:TextBox>
+            <asp:Button ID="SpellCheckButton" runat="server" OnClick="SpellCheckButton_Click" Text="Spell Check" />
+            <asp:Button ID="InsertWordButton" runat="server" OnClick="InsertWordButton_Click" Text="This is a word!" />
         </p>
+        <asp:Label ID="SpellSuggestion" runat="server"></asp:Label>
     </form>
 </body>
 </html>

@@ -28,5 +28,11 @@ namespace RESTShared.DAL
             CommonMisspell misspell=GetConnection(ConnectionString).Single<CommonMisspell>(cm => cm.Spell.ToLower() == word.ToLower());
             return misspell;
         }
+        public string QueryCorrectSpell(string word)
+        {
+            CommonMisspell misspell = GetConnection(ConnectionString).Single<CommonMisspell>(cm => cm.Spell.ToLower() == word.ToLower());
+            string spell = GetConnection(ConnectionString).Single<Word>(w=>w.Id==misspell.FullWordId).Spell;
+            return spell;
+        }
     }
 }
