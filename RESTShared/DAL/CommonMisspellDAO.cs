@@ -15,7 +15,7 @@ namespace RESTShared.DAL
         }
         public CommonMisspell Insert(CommonMisspell misspell)
         {
-            GetConnection(ConnectionString).Insert(misspell);
+            GetConnection(ConnectionString).Save(misspell);
             return misspell;
         }
         public CommonMisspell Query(CommonMisspell misspell)

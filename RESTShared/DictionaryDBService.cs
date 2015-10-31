@@ -18,7 +18,7 @@ namespace RESTShared
         }
         public bool DoesWordExist(Word word)
         {
-            new WordDAO().Query(word); ;
+            word=new WordDAO().Query(word); ;
             if (word.Id == 0)
                 return false;
             else
@@ -40,6 +40,8 @@ namespace RESTShared
         }
         public List<SpellCheckSuggestion> GetSpellSuggestions(Word word)
         {
+            if (DoesWordExist(word))
+                return new List<SpellCheckSuggestion>();
             List<SpellCheckSuggestion> suggestionList = new List<SpellCheckSuggestion>();
             Dictionary<string, int> suggestionDict = new Dictionary<string, int>();
             if (IsACommonMisspell(word))

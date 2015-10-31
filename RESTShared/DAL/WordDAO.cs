@@ -21,7 +21,7 @@ namespace RESTShared.DAL
         }
         public Word Query(Word word)
         {
-            GetConnection(ConnectionString).Single<Word>(w=>w.Spell.ToLower()==word.Spell.ToLower());
+            word=GetConnection(ConnectionString).Single<Word>(w=>w.Spell.ToLower()==word.Spell.ToLower());
             return word; 
         }
         public List<Word> FindPartialMatch(string word)
