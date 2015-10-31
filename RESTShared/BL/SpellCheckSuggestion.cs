@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using ServiceStack.Text;
 namespace RESTShared
 {
-    [Route("/spellcheckrequest/{Word}/spellchecksuggestion","GET") ]
     [Serializable]
     public class SpellCheckSuggestion
     {

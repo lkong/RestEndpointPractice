@@ -55,7 +55,12 @@ namespace RESTService
         {
             dictionaryDBService.Init(); 
         }
-        public List<SpellCheckSuggestion> Any(SpellCheckRequest request)
+        public SpellCheckSuggestion Post(SpellCheckRequest request)
+        {
+            dictionaryDBService.InsertWord(new Word() { Spell = request.Word });
+            return new SpellCheckSuggestion() { Word = request.Word, Rank = 0 };
+        }
+        public List<SpellCheckSuggestion> Get(SpellCheckRequest request)
         {
             return dictionaryDBService.GetSpellSuggestions(new Word() {Spell=request.Word });
         }
@@ -80,8 +85,10 @@ namespace RESTService
             //You can change /servicestack/ to a custom path in the web.config.
             Routes
               .Add<SpellCheckRequest>("/spellcheckrequest")
-              .Add<SpellCheckRequest>("/spellcheckrequest/{Word}");
-            }
+              .Add<SpellCheckRequest>("/spellcheckrequest/{Word}")
+              .Add<SpellCheckSuggestion>("/spellcheckrequest/{Word}/spellchecksuggestion", "GET");
+;
+        }
         }
 
 }

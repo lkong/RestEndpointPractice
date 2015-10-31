@@ -19,6 +19,7 @@ namespace ActivehoursAssignment
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
         }
 
         protected void SpellCheckButton_Click(object sender, EventArgs e)
@@ -87,7 +88,33 @@ namespace ActivehoursAssignment
         }
         protected void InsertWordButton_Click(object sender, EventArgs e)
         {
+            HttpClient client = new HttpClient();
+            var request = (HttpWebRequest)WebRequest.Create(RESTWebService + @"/spellcheckrequest/");
+            request.Method = "POST";
+            request.ContentLength = 0;
+            request.ContentType = ContentType;
+            if (!string.IsNullOrEmpty(InputTextBox.Text))
+            {
+                var encoding = new UTF8Encoding();
+                var bytes = Encoding.GetEncoding("iso-8859-1").GetBytes(InputTextBox.Text);
+                request.ContentLength = bytes.Length;
 
+                using (var writeStream = request.GetRequestStream())
+                {
+                    writeStream.Write(bytes, 0, bytes.Length);
+                }
+            }
+
+            using (var response = (HttpWebResponse)request.GetResponse())
+            {
+                var responseValue = string.Empty;
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    var message = String.Format("Request failed. Received HTTP {0}", response.StatusCode);
+                    throw new ApplicationException(message);
+                }
+            }
         }
     }
 }

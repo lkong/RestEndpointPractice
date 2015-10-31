@@ -18,8 +18,11 @@ namespace RESTShared
         }
         public bool DoesWordExist(Word word)
         {
-            word=new WordDAO().Query(word); ;
-            if (word.Id == 0)
+            if (word.Spell==null || word==null)
+                return false;
+            
+            word = new WordDAO().Query(word);
+            if (word == null || word.Id == 0)
                 return false;
             else
                 return true;
@@ -28,11 +31,15 @@ namespace RESTShared
         public bool IsACommonMisspell(Word word)
         {
             CommonMisspell cm = new CommonMisspellDAO().Query(word.Spell);
-            if (cm.Id == 0)
+            if (cm==null || cm.Id == 0)
                 return false;
             else
                 return true;
 
+        }
+        public void InsertWord(Word word)
+        {
+            new WordDAO().Insert(word);
         }
         public string GetCorrectSpellForACommonMisspell(string misspell)
         {
@@ -40,6 +47,8 @@ namespace RESTShared
         }
         public List<SpellCheckSuggestion> GetSpellSuggestions(Word word)
         {
+            if (word.Spell==null || word.Spell.Length<3)
+                return new List<SpellCheckSuggestion>();
             if (DoesWordExist(word))
                 return new List<SpellCheckSuggestion>();
             List<SpellCheckSuggestion> suggestionList = new List<SpellCheckSuggestion>();
