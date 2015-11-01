@@ -48,6 +48,9 @@ namespace RESTService
 
         }
     }
+    /// <summary>
+    /// Service to process received REST requests
+    /// </summary>
     public class DictionaryWebService : Service
     {
         private DictionaryDBService dictionaryDBService = new DictionaryDBService();
@@ -55,11 +58,21 @@ namespace RESTService
         {
             dictionaryDBService.Init(); 
         }
+        /// <summary>
+        /// Process POST requests
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public SpellCheckSuggestion Post(SpellCheckRequest word)
         {
             dictionaryDBService.InsertWord(new Word() { Spell = word.Word });
             return new SpellCheckSuggestion() { Word = word.Word, Rank = 0 };
         }
+        /// <summary>
+        /// Process GET requests
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public List<SpellCheckSuggestion> Get(SpellCheckRequest request)
         {
             return dictionaryDBService.GetSpellSuggestions(new Word() {Spell=request.Word });
@@ -81,8 +94,6 @@ namespace RESTService
             public override void Configure(Container container)
             {
             //Register user-defined REST-ful urls. You can access the service at the url similar to the following.
-            //http://localhost/ServiceStack.Hello/servicestack/hello or http://localhost/ServiceStack.Hello/servicestack/hello/John%20Doe
-            //You can change /servicestack/ to a custom path in the web.config.
             Routes
               .Add<SpellCheckRequest>("/spellcheckrequest")
               .Add<SpellCheckRequest>("/spellcheckrequest/{Word}","GET")

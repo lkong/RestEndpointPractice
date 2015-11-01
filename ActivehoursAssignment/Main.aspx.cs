@@ -22,7 +22,13 @@ namespace ActivehoursAssignment
 
 
         }
-
+        /// <summary>
+        /// Send GET request to remote REST endpoint
+        /// Parse XML
+        /// Using httpclient
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void SpellCheckButton_Click(object sender, EventArgs e)
         {
             HttpClient client = new HttpClient();
@@ -87,6 +93,12 @@ namespace ActivehoursAssignment
                     //return responseValue;
             }
         }
+        /// <summary>
+        /// Send POST request to remote REST endpoint
+        /// Using RestSharp
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void InsertWordButton_Click(object sender, EventArgs e)
         {
             RestClient client = new RestClient(RESTWebServiceURL);

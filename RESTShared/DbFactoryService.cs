@@ -13,12 +13,6 @@ namespace RESTShared
     {
         private OrmLiteConnectionFactory _ormLiteConnectionFactory = null;
 
-        /// <summary>
-        /// Get database connection factory for opening a pooled connection.
-        /// </summary>
-        /// <param name="dialectProvider"><see cref="IOrmLiteDialectProvider"/>Database Dialect Provider.</param>
-        /// <param name="connectionString">Database connection string.</param>
-        /// <returns><see cref="OrmLiteConnectionFactory"/>.</returns>
         public virtual OrmLiteConnectionFactory GetFactory(IOrmLiteDialectProvider dialectProvider, string connectionString)
         {
             try

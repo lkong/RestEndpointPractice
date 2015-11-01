@@ -16,6 +16,11 @@ namespace RESTShared
             LoadData();
             
         }
+        /// <summary>
+        /// Check if the word is spelled correctly
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public bool DoesWordExist(Word word)
         {
             if (word.Spell==null || word==null)
@@ -28,6 +33,11 @@ namespace RESTShared
                 return true;
         
         }
+        /// <summary>
+        /// Decide if given word is a common misspell
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
         public bool IsACommonMisspell(Word word)
         {
             CommonMisspell cm = new CommonMisspellDAO().Query(word.Spell);
@@ -37,14 +47,31 @@ namespace RESTShared
                 return true;
 
         }
+        /// <summary>
+        /// Insert a word into the DB
+        /// </summary>
+        /// <param name="word"></param>
         public void InsertWord(Word word)
         {
             new WordDAO().Insert(word);
         }
+        /// <summary>
+        /// Look for common misspell
+        /// </summary>
+        /// <param name="misspell"></param>
+        /// <returns></returns>
         public string GetCorrectSpellForACommonMisspell(string misspell)
         {
             return new CommonMisspellDAO().QueryCorrectSpell(misspell);
         }
+        /// <summary>
+        /// Look up spell suggestion for a given word
+        /// Look for the exact match first
+        /// Then look for common misspells
+        /// Then look up recursively for partial match
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns> return a list of spell suggestion with rank</returns>
         public List<SpellCheckSuggestion> GetSpellSuggestions(Word word)
         {
             if (word.Spell==null || word.Spell.Length<3)
@@ -63,6 +90,13 @@ namespace RESTShared
             return suggestionList;
         
         }
+        /// <summary>
+        /// Recursively checking for partial fit of given word
+        /// Add result and rank (levenshtein distance) to a given dictionary
+        /// </summary>
+        /// <param name="word"></param>
+        /// <param name="LevenshteinDistance"></param>
+        /// <param name="suggestionDict"></param>
         public void GetSpellSuggestions(string word, int LevenshteinDistance, Dictionary<string, int> suggestionDict)
         {
             if (word.Length<3)
@@ -74,6 +108,9 @@ namespace RESTShared
             GetSpellSuggestions(word.Substring(1), LevenshteinDistance + 1, suggestionDict);
             GetSpellSuggestions(word.Substring(0, word.Length - 1), LevenshteinDistance + 1, suggestionDict);
         }
+        /// <summary>
+        /// Init DB
+        /// </summary>
         private void LoadData()
         {
             new WordDAO().CreateTable();
