@@ -50,7 +50,7 @@ namespace RESTShared
             if (word.Spell==null || word.Spell.Length<3)
                 return new List<SpellCheckSuggestion>();
             if (DoesWordExist(word))
-                return new List<SpellCheckSuggestion>();
+                return new List<SpellCheckSuggestion>() { new SpellCheckSuggestion() {Word="Correct spell", Rank=-1 } };
             List<SpellCheckSuggestion> suggestionList = new List<SpellCheckSuggestion>();
             Dictionary<string, int> suggestionDict = new Dictionary<string, int>();
             if (IsACommonMisspell(word))

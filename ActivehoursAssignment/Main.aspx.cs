@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace ActivehoursAssignment
 {
     public partial class Main : System.Web.UI.Page
     {
-        private string RESTWebService = @"http://localhost:13182/";
+        private string RESTWebServiceURL = @"http://localhost:13182/";
         private string parameters = @"?format=xml";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,7 +26,7 @@ namespace ActivehoursAssignment
         protected void SpellCheckButton_Click(object sender, EventArgs e)
         {
             HttpClient client = new HttpClient();
-            var request = (HttpWebRequest)WebRequest.Create(RESTWebService+@"/spellcheckrequest/" +InputTextBox.Text + parameters);
+            var request = (HttpWebRequest)WebRequest.Create(RESTWebServiceURL+@"/spellcheckrequest/" +InputTextBox.Text + parameters);
             request.Method = "GET";
             request.ContentLength = 0;
             request.ContentType = ContentType;
@@ -88,33 +89,15 @@ namespace ActivehoursAssignment
         }
         protected void InsertWordButton_Click(object sender, EventArgs e)
         {
-            HttpClient client = new HttpClient();
-            var request = (HttpWebRequest)WebRequest.Create(RESTWebService + @"/spellcheckrequest/");
-            request.Method = "POST";
-            request.ContentLength = 0;
-            request.ContentType = ContentType;
-            if (!string.IsNullOrEmpty(InputTextBox.Text))
-            {
-                var encoding = new UTF8Encoding();
-                var bytes = Encoding.GetEncoding("iso-8859-1").GetBytes(InputTextBox.Text);
-                request.ContentLength = bytes.Length;
+            RestClient client = new RestClient(RESTWebServiceURL);
+            // client.Authenticator = new HttpBasicAuthenticator(username, password);
 
-                using (var writeStream = request.GetRequestStream())
-                {
-                    writeStream.Write(bytes, 0, bytes.Length);
-                }
-            }
-
-            using (var response = (HttpWebResponse)request.GetResponse())
-            {
-                var responseValue = string.Empty;
-
-                if (response.StatusCode != HttpStatusCode.OK)
-                {
-                    var message = String.Format("Request failed. Received HTTP {0}", response.StatusCode);
-                    throw new ApplicationException(message);
-                }
-            }
+            RestRequest request = new RestRequest("spellcheckrequest/", Method.POST);
+            request.AddParameter("Word", InputTextBox.Text); // adds to POST or URL querystring based on Method
+                                                             // execute the request
+            var response = client.Execute(request);
+            var content = response.Content;
+            SpellSuggestion.Text = "New word added";
         }
     }
 }
